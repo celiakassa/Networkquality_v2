@@ -83,7 +83,7 @@ var (
 
 func main() {
 //add by celia
-        file, err := os.OpenFile("/home/celia/celia/custom.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+        file, err := os.OpenFile("custom.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
         if err != nil {
         log.Fatal(err)
         }
