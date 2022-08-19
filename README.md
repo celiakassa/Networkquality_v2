@@ -2,7 +2,8 @@
 
 # Requirement
 
-1-Go (version >= 1.16.6)
+1-Go 
+
 2-The source code
 
 # Go Installation
@@ -13,13 +14,13 @@ sudo apt-get -y upgrade
 ```
 Now download the Go language binary archive file using following link. To find and download latest version available or 32 bit version go to official download page:https://go.dev/dl/
 ```
-wget https://dl.google.com/go/go1.16.4.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.19.linux-amd64.tar.gz
 ```
 Now extract the downloaded archive and install it to the desired location on the system. For this tutorial, I am installing it under /usr/local directory.
 
 
 ```
-sudo tar -xvf go1.16.4.linux-amd64.tar.gz
+sudo tar -xvf go1.19.linux-amd64.tar.gz
 sudo rm -r /usr/local/go
 sudo mv go /usr/local 
 ```
@@ -51,7 +52,7 @@ go version
 ```
 Result
 ```
-go version go1.16.4 linux/amd64
+go version go1.19 linux/amd64
 ```
 
 To get the source code, clone this repository
@@ -88,6 +89,11 @@ crontab -e
 
 Add at the start of file the path of executable `networkQuality` and executable of go
 
+To found your go path :
+
+```
+$PATH
+```
 ```
 PATH:=/usr/bin:/home/celia/go/bin
 ```
