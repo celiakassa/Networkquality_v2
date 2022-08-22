@@ -35,6 +35,8 @@ import (
 	"github.com/network-quality/goresponsiveness/timeoutat"
 	"github.com/network-quality/goresponsiveness/utilities"
 	"golang.org/x/net/http2"
+	"encoding/json"
+	"io/ioutil"
 )
 
 var (
@@ -81,9 +83,20 @@ var (
 	)
 )
 
+// declaring a struct
+type Infos struct {
+  
+    // defining struct variables
+    Country      string  `json:"country"`
+    Query string     `json:"query"`
+    RegionName string    `json:"regionName"`
+    City  string         `json:"city"`
+    Isp 	string     `json:"isp"`
+}
+
 func main() {
 //add by celia
-        file, err := os.OpenFile("custom.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+        file, err := os.OpenFile("custo.csv", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
         if err != nil {
         log.Fatal(err)
         }
@@ -413,8 +426,29 @@ func main() {
 		logger.Println("RPM: ",rpm,"\n")
 		fmt.Printf("Total measurements: %d\n", totalMeasurements)
 		fmt.Printf("RPM: %5.0f\n", rpm)
-	} else {
+		//celia
+		resp, err := http.Get("http://ip-api.com/json/")
+                 if err != nil {
+			fmt.Printf("Error:  %s", err)
+		  }
+		defer resp.Body.Close()
+		response, err := ioutil.ReadAll(resp.Body)
+		var info Infos
+		json.Unmarshal(response, &info)
+		fmt.Printf("Country: %s\n", info.Country)
+		fmt.Printf("RegionName: %s\n", info.RegionName)
+		fmt.Printf("City: %s\n", info.City)
+		fmt.Printf("Isp: %s\n", info.Isp)
+		fmt.Println("Query IP:",  info.Query)
+		//fmt.Println(info)
+		logger.Println("Country: ",info.Country,"\n")
+		logger.Println("RegionName: ",info.RegionName,"\n")
+		logger.Println("City: ",info.City,"\n")
+		logger.Println("Isp: ",info.Isp,"\n")
+		logger.Println("Query: ",info.Query,"\n")
+		} else {
 		fmt.Printf("Error occurred calculating RPM -- no probe measurements received.\n")
+		logger.Println("Error occurred calculating RPM -- no probe measurements received.\n")
 	}
 
 	cancelOperatingCtx()
