@@ -96,7 +96,7 @@ type Infos struct {
 
 func main() {
 //add by celia
-        file, err := os.OpenFile("custo.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+        file, err := os.OpenFile("custo.csv", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
         if err != nil {
         log.Fatal(err)
         }
@@ -147,7 +147,7 @@ func main() {
 
 	// print the banner //add logger by celia
 	dt := time.Now().UTC()
-	logger.Println(dt.Format("01-02-2006,15:04:05"),"\n")
+	logger.Println(dt.Format("01-02-2006 15:04:05")," UTC Go Responsiveness to", configHostPort,"...\n")
 	fmt.Printf(
 		"%s UTC Go Responsiveness to %s...\n",
 		dt.Format("01-02-2006 15:04:05"),
@@ -392,14 +392,14 @@ func main() {
 		}
 	}
 	//logger added by celia
-       logger.Println("Download,",utilities.ToMbps(downloadSaturation.RateBps),"\n")
+       logger.Println("Download: ", utilities.ToMbps(downloadSaturation.RateBps),"Mbps (",utilities.ToMBps(downloadSaturation.RateBps)," MBps), using", len(downloadSaturation.LGCs)," parallel connections.\n")
 	fmt.Printf(
 		"Download: %7.3f Mbps (%7.3f MBps), using %d parallel connections.\n",
 		utilities.ToMbps(downloadSaturation.RateBps),
 		utilities.ToMBps(downloadSaturation.RateBps),
 		len(downloadSaturation.LGCs),
 	)
-	logger.Println("Upload,",utilities.ToMbps(uploadSaturation.RateBps),"\n")
+	logger.Println("Upload: ",utilities.ToMbps(uploadSaturation.RateBps)," Mbps (",utilities.ToMBps(uploadSaturation.RateBps)," MBps), using ", len(uploadSaturation.LGCs),"parallel connections.\n")
 	fmt.Printf(
 		"Upload:   %7.3f Mbps (%7.3f MBps), using %d parallel connections.\n",
 		utilities.ToMbps(uploadSaturation.RateBps),
@@ -422,8 +422,8 @@ func main() {
 		rpm := float64(
 			time.Minute.Seconds(),
 		) / (totalMeasurementTimes / (float64(totalMeasurements)))
-		logger.Println("Total measurements,",totalMeasurements,"\n")
-		logger.Println("RPM,",rpm,"\n")
+		logger.Println("Total measurements: ", totalMeasurements,"\n")
+		logger.Println("RPM: ",rpm,"\n")
 		fmt.Printf("Total measurements: %d\n", totalMeasurements)
 		fmt.Printf("RPM: %5.0f\n", rpm)
 		//celia
@@ -441,14 +441,14 @@ func main() {
 		fmt.Printf("Isp: %s\n", info.Isp)
 		fmt.Println("Query IP:",  info.Query)
 		//fmt.Println(info)
-		logger.Println("Country,",info.Country,"\n")
-		logger.Println("RegionName,",info.RegionName,"\n")
-		logger.Println("City,",info.City,"\n")
-		logger.Println("Isp,",info.Isp,"\n")
-		logger.Println("Query,",info.Query,"\n")
+		logger.Println("Country: ",info.Country,"\n")
+		logger.Println("RegionName: ",info.RegionName,"\n")
+		logger.Println("City: ",info.City,"\n")
+		logger.Println("Isp: ",info.Isp,"\n")
+		logger.Println("Query: ",info.Query,"\n")
 		} else {
 		fmt.Printf("Error occurred calculating RPM -- no probe measurements received.\n")
-		logger.Println("Error,calculatingRPM\n")
+		logger.Println("Error occurred calculating RPM -- no probe measurements received.\n")
 	}
 
 	cancelOperatingCtx()
